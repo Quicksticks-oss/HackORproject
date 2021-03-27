@@ -18,9 +18,9 @@ class Block:
                     "nonce": str(nonce),
                     "time": str(time.ctime())
                 }
-                self.add_block(name=str(hash), data=block_data)
+                self.make_block(name=str(hash), data=block_data)
 
-    def add_block(self, name='Block', data=None):
+    def make_block(self, name='Block', data=None):
         f = open('data/blocks/'+name+'.json', 'w+')
         f.write(json.dumps(data))
         f.close()

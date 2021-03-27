@@ -1,7 +1,7 @@
 # !/usr/bin/python3
 import socket
 
-ip = '127.0.0.1'
+ip = input('IP: ')
 port_tcp = 19295
 port_udp = 21025
 

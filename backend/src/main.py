@@ -11,9 +11,10 @@ import os
 # Main class
 class Main:
     def __init__(self, ip='127.0.0.1'):
-        print('* -----------------')
+        time_past = time.time()
+        print('* --------------------------')
         print('* Server starting...')
-        print('* -----------------')
+        print('* --------------------------')
         # Variables
         self.ip = ip
         self.port_tcp = 19295
@@ -28,24 +29,30 @@ class Main:
         self.socket_udp_data.bind((self.ip, self.port_udp))
         # Sets the TCP socket to listen mode
         self.socket_tcp.listen(5)
-        print('* -----------------')
+        print('*')
+        print('* --------------------------')
         print('* Loading blocks...')
         self.load_blocks()
         print('*', str(len(self.blocks)) , 'Blocks Loaded!')
-        print('* -----------------')
+        print('* --------------------------')
         print('*')
-        print('* -----------------')
+        print('* --------------------------')
         print('* --  IP:', self.ip)
         print('* --  PORT TCP:', self.port_tcp)
         print('* --  PORT UDP:', self.port_udp)
-        print('* --  ')
+        print('* --------------------------')
+        print('*')
+        print('* --------------------------')
         print('* --  CAP:', self.cap)
         print('* --  BLOCKS:', len(self.blocks))
-        print('* -----------------')
+        print('* --------------------------')
         print('*')
-        print('* -----------------')
+        time_new = (time_past - time.time()) * -1
+        print('* TIME:', time_new)
+        print('*')
+        print('* --------------------------')
         print('* Server started!')
-        print('* -----------------')
+        print('* --------------------------')
 
     def load_blocks(self):
         try: # Checks if the blocks dir exists
