@@ -68,8 +68,7 @@ class Main:
         print('* --------------------------')
 
     def block(self, prev=None, hash=None, recv=None, send=None, ammount=0, fine=0.01, nonce=None):
-        if ammount > fine and send != None and len(list(send)) == 24:
-            if recv != None and len(list(recv)) == 24 and prev != None and nonce != None:
+        if ammount > fine and send != None and len(list(send)) == 24 and recv != None and len(list(recv)) == 24 and prev != None and nonce != None:
                 block_data = {
                     "prevhash": str(prev),
                     "hash": str(hash),
@@ -140,7 +139,7 @@ class Main:
                         b = data_list[2]
                         self.miners_send(b)
                 elif data_list[0] == 'GREENLIGHT' and miner == True:
-                    self.add_block('aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', '123', '0000', data_list[1])
+                    self.add_block('aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', '123', '0000')
 
     def update(self):
         while True:
