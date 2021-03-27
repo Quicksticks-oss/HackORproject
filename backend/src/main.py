@@ -1,5 +1,4 @@
 # !/usr/bin/python3
-from hash_ import *
 import threading
 import hashlib
 import socket
@@ -90,6 +89,11 @@ class Main:
         print('* BLOCK ADDED')
         print('*', time.ctime())
         print('* -----------')
+
+    def hash(self, data):
+        m = hashlib.sha256()
+        m.update(data)
+        return m.hexdigest()
 
     def load_blocks(self):
         try: # Checks if the blocks dir exists
