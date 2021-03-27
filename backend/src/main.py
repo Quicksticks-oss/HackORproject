@@ -56,26 +56,57 @@ class Main:
 
         path = os.getcwd() # Gets the current working dir
         list_of_files = []
-        path = os.path.join(path, 'blocks') # Joins the cwd with blocks dir
+        path = os.path.join(path, 'data/blocks') # Joins the cwd with blocks dir
 
         for root, dirs, files in os.walk(path):
             for file in files:
-                list_of_files.append(os.path.join('blocks/',file))
+                list_of_files.append(os.path.join('data/blocks/',file))
 
         if len(list_of_files) > 0:
             for name in list_of_files:
                 print('* -- ', str(name))
-                f = open(name, 'rb+')
+                f = open(name, 'r')
                 self.blocks.append(f.read())
                 f.close()
         else:
             print('* NO BLOCKS!')
+
+    def client(self, c):
+        try:
+            c.send(str(len(self.blocks)).encode('utf-8'))
+            while True:
+                data = c.recv(1024).decode('utf-8')
+                if data != None and data != '':
+                    data_list = data.split()
+                    if data_list[0] == 'GET':
+                        if data_list[1] == 'BLOCK':
+                            index = data_list[2]
+                            try:
+                                b = self.blocks[int(index)]
+                                c.send(str(b).encode('utf-8'))
+                            except:
+                                c.send(b'404')
+                else:
+                    c.close()
+                    break
+        except:
+            try:
+                c.close()
+            except:
+                pass
 
     def run(self):
         # Forever loop
         while True:
             conn, addr = self.socket_tcp.accept()
             del(addr)
+            t = threading.Thread(target=self.client, args=(conn,))
+            t.start()
+
+    def add_block(self, hash=None, recv=None, send=None, ammount=0, nonce=None):
+        prev_index = len(self.blocks)-1
+        prev = json.loads(self.blocks[prev_index])
+        b = Block(prev['hash'], hash, recv, send, ammount, nonce)
 
 # Start
 if __name__ == '__main__':
