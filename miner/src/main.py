@@ -31,8 +31,9 @@ class Main:
     def run(self):
         while True:
             block = self.socket_tcp.recv(1024).decode()
+            index = self.socket_tcp.recv(1024).decode()
             print(block)
-            self.socket_tcp.send('GREENLIGHT 123'.encode())
+            self.socket_tcp.send(('GREENLIGHT '+index).encode())
 
 # Start
 if __name__ == '__main__':

@@ -31,6 +31,7 @@ class Main:
         self.port_udp = 21025
         self.cap = 1000000
         self.blocks = []
+        self.blocks_ver = []
         self.miners = []
         # Creates the sockets
         self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -67,28 +68,25 @@ class Main:
         print('* --------------------------')
 
     def block(self, prev=None, hash=None, recv=None, send=None, ammount=0, fine=0.01, nonce=None):
-        if ammount > fine and send != None and len(list(send)) == 24 and recv != None and len(list(recv)) == 24 and prev != None and nonce != None:
-                block_data = {
-                    "prevhash": str(prev),
-                    "hash": str(hash),
-                    "recv": str(recv),
-                    "send": str(send),
-                    "ammount": str(ammount),
-                    "nonce": str(nonce),
-                    "time": str(time.ctime())
-                }
-                self.make_block(name=str(hash), data=block_data)
-                return block_data
-
-    def make_block(self, name='Block', data=None):
-        f = open('data/blocks/'+name+'.json', 'w+')
-        f.write(json.dumps(data))
-        f.close()
-        print('* -----------')
-        print('*', str(hash))
-        print('* BLOCK ADDED')
-        print('*', time.ctime())
-        print('* -----------')
+        if float(ammount) > float(fine):
+            block_data = {
+                "prevhash": str(prev),
+                "hash": str(hash),
+                "recv": str(recv),
+                "send": str(send),
+                "ammount": float(ammount),
+                "nonce": str(nonce),
+                "time": str(time.ctime())
+            }
+            f = open('data/blocks/'+str(hash)+'.json', 'w+')
+            f.write(json.dumps(block_data))
+            f.close()
+            print('* -----------')
+            print('*', str(hash))
+            print('* BLOCK ADDED')
+            print('*', time.ctime())
+            print('* -----------')
+            return block_data
 
     def hash(self, data):
         m = hashlib.sha256()
@@ -141,9 +139,13 @@ class Main:
                 elif data_list[0] == 'ADD':
                     if data_list[1] == 'BLOCK':
                         b = data_list[2]
-                        self.miners_send(b)
+                        self.blocks_ver.append(b)
+                        print(self.blocks_ver)
+                        time.sleep(0.1)
+                        self.miners_send(b, len(self.blocks_ver)-1)
                 elif data_list[0] == 'GREENLIGHT' and miner == True:
-                    self.add_block('aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', '123', '0000')
+                    index = int(data_list[1])
+                    self.add_block('aaaabaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', 'aaaaaaaaaaaaaaaaaaaaaaaa', 123, '0000')
 
     def update(self):
         while True:
@@ -154,9 +156,10 @@ class Main:
             print('* MINERS:', len(self.miners))
             print('* -------------- *')
 
-    def miners_send(self, block):
+    def miners_send(self, block, index):
         for x in range(len(self.miners)):
             self.miners[x].send(block.encode('utf-8'))
+            self.miners[x].send(str(index).encode('utf-8'))
         print('* -------------- *')
         print('* Block sent...')
         print('* -------------- *')
@@ -175,7 +178,7 @@ class Main:
         prev_index = len(self.blocks)-1
         prev = self.blocks[prev_index]
         b = self.block(prev, hash, recv, send, ammount, nonce)
-        self.blocks.append(str(b))
+        self.blocks.append(b)
 
 # Start
 if __name__ == '__main__':
