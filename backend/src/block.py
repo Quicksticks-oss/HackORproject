@@ -19,6 +19,12 @@ class Block:
                     "time": str(time.ctime())
                 }
                 self.make_block(name=str(hash), data=block_data)
+                print('* -----------')
+                print('*', str(hash))
+                print('* BLOCK ADDED')
+                print('*', time.ctime())
+                print('* -----------')
+                return block_data
 
     def make_block(self, name='Block', data=None):
         f = open('data/blocks/'+name+'.json', 'w+')

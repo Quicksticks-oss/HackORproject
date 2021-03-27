@@ -6,6 +6,7 @@ import hashlib
 import socket
 import json
 import time
+import sys
 import os
 
 # Main class
@@ -21,6 +22,7 @@ class Main:
         self.port_udp = 21025
         self.cap = 1000000
         self.blocks = []
+        self.miners = []
         # Creates the sockets
         self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.socket_udp_data = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -93,6 +95,9 @@ class Main:
                                 c.send(str(b).encode('utf-8'))
                             except:
                                 c.send(b'404')
+                    if data_list[0] == 'MINER':
+                        self.miners.append(c)
+                        c.send('ACCEPTED')
                 else:
                     c.close()
                     break
@@ -102,12 +107,27 @@ class Main:
             except:
                 pass
 
+    def update(self):
+        while True:
+            time.sleep(60)
+            print('* --- UPDATE --- *')
+            print('* TIME:', time.ctime())
+            print('* BLOCKS:', len(self.blocks))
+            print('* MINERS:', len(self.miners))
+            print('* -------------- *')
+
+    def miners_send(self, block):
+        for x in range(len(self.miners)):
+            self.miners[x].send(block)
+
     def run(self):
+        t = threading.Thread(target=self.update, args=())
+        t.start()
         # Forever loop
         while True:
             conn, addr = self.socket_tcp.accept()
             del(addr)
-            t = threading.Thread(target=self.client, args=(conn,))
+            t = threading.Thread(target=self.client, args=(conn, ))
             t.start()
 
     def add_block(self, hash=None, recv=None, send=None, ammount=0, nonce=None):
