@@ -14,13 +14,10 @@ const { Sider } = Layout;
 
 export default class SideNav extends Component {
   state = {
-    collapsed: false,
+    collapsed: false
   };
 
-  onCollapse = collapsed => {
-    console.log(collapsed);
-    this.setState({ collapsed });
-  };
+  onCollapse = collapsed => this.setState({ collapsed });
 
   render() {
     const { collapsed } = this.state;
@@ -36,9 +33,14 @@ export default class SideNav extends Component {
           width="75"
           height="75"
           className="logo"
+          key="0"
         />
-        <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1" icon={<CodeOutlined />}>
+        <Menu theme="dark" defaultSelectedKeys={[this.props.page]} mode="inline">
+          <Menu.Item
+            key="1"
+            icon={<CodeOutlined />}
+            onClick={this.props.onClick}
+          >
             What is Blockchain
           </Menu.Item>
           <SubMenu
@@ -46,17 +48,30 @@ export default class SideNav extends Component {
             icon={<DesktopOutlined />}
             title="Blockchain Technologies"
           >
-            <Menu.Item key="2">Hash Functions</Menu.Item>
-            <Menu.Item key="3">Public-Private Keys</Menu.Item>
-            <Menu.Item key="4">The Internet</Menu.Item>
+            <Menu.Item key="2" onClick={this.props.onClick}>
+              Hash Functions
+            </Menu.Item>
+            <Menu.Item key="3" onClick={this.props.onClick}>
+              Public-Private Keys
+            </Menu.Item>
+            <Menu.Item key="4" onClick={this.props.onClick}>
+              The Internet
+            </Menu.Item>
           </SubMenu>
           <SubMenu key="sub2" icon={<EyeOutlined />} title="Blockchain Anatomy">
-            <Menu.Item key="5">Blocks</Menu.Item>
-            <Menu.Item key="6">Blockchains</Menu.Item>
-            <Menu.Item key="7">Nodes</Menu.Item>
-            <Menu.Item key="8">Consensus</Menu.Item>
+            <Menu.Item key="5" onClick={this.props.onClick}>Blocks</Menu.Item>
+            <Menu.Item key="6" onClick={this.props.onClick}>
+              Blockchains
+            </Menu.Item>
+            <Menu.Item key="7" onClick={this.props.onClick}>Nodes</Menu.Item>
+            <Menu.Item key="8" onClick={this.props.onClick}>
+              Consensus
+            </Menu.Item>
           </SubMenu>
-          <Menu.Item key="9" icon={<QuestionOutlined />}>
+          <Menu.Item
+            key="9"
+            icon={<QuestionOutlined />}
+            onClick={this.props.onClick}>
             Why Blockchain
           </Menu.Item>
         </Menu>
