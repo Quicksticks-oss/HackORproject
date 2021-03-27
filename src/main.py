@@ -18,7 +18,7 @@ class Main:
         self.ip = ip
         self.port_tcp = 19295
         self.port_udp = 21025
-        self.cap = 1000000 # STILL NEEDED! STILL NEEDED! STILL NEEDED! STILL NEEDED! STILL NEEDED! STILL NEEDED! STILL NEEDED!
+        self.cap = 1000000
         self.blocks = []
         # Creates the sockets
         self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -49,7 +49,8 @@ class Main:
 
     def load_blocks(self):
         try: # Checks if the blocks dir exists
-            os.mkdir('blocks') # Creates the dir if its not there
+            os.mkdir('data') # Creates the dir if its not there
+            os.mkdir('data/blocks') # Creates the dir if its not there
         except:
             pass
 
