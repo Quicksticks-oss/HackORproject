@@ -32,20 +32,7 @@ export default class Page10 extends Component {
     if (this.state.on) {
       this.setState({ on: false })
     } else {
-      const python = require('child_process')
-        .spawn('python', ['../../backend/src/main.py']);
-      python.stdout.on('data', function (data) {
-        console.log("Python response: ", data.toString('utf8'));
-        result.textContent = data.toString('utf8');
-      });
-
-      python.stderr.on('data', (data) => {
-        console.error(`stderr: ${data}`);
-      });
-
-      python.on('close', (code) => {
-        console.log(`child process exited with code ${code}`);
-      });
+      var shell = require('shelljs');
       this.setState({ on: true })
     }
   }
