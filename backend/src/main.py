@@ -170,10 +170,10 @@ class Main:
                     elif data_list[0] == 'GREENLIGHT' and miner == True:
                         index = int(data_list[1])
                         self.blocks.append(self.blocks_ver[index])
-                        self.blocks_ver.remove(self.blocks_ver[index])
                         f = open('data/blocks/'+str(len(self.blocks)-1)+'.json', 'w+')
-                        f.write(str(self.blocks[index]))
+                        f.write(str(self.blocks_ver[index]))
                         f.close()
+                        self.blocks_ver.remove(self.blocks_ver[index])
                         print('* -----------')
                         print('* BLOCK ADDED')
                         print('*', time.ctime())
