@@ -28,13 +28,14 @@ export default class SideNav extends Component {
         onCollapse={this.onCollapse}
         width="20vw"
       >
-        <img
-          src="./assets/hackor.png"
-          width="75"
-          height="75"
-          className="logo"
-          key="0"
-        />
+        <a onClick={this.props.onClick}>
+          <img
+            src="./assets/CryptOR.png"
+            width="75"
+            height="75"
+            className="logo"
+          />
+        </a>
         <Menu theme="dark" defaultSelectedKeys={[this.props.page]} mode="inline">
           <Menu.Item
             key="1"

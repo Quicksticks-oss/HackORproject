@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Layout, Typography } from "antd";
+import { Layout } from "antd";
 import SideNav from './SideNav';
 import Home from './Home';
 import Page1 from './Page1';
@@ -7,15 +7,19 @@ import Page2 from './Page2';
 import Page3 from './Page3';
 
 const { Content, Footer } = Layout;
-const { Title } = Typography;
 
 export default class PageLayout extends Component {
   state = {
     page: '0',
   };
 
-  onClick = page => this.setState({ page: page.key});
-
+  onClick = page => {
+    if (page.key) {
+      this.setState({ page: page.key});
+    } else {
+      this.setState({ page: "0"});
+    }
+  };
   getDisplays = () => {
     let a = [];
     for (var i = 0; i < 10; i++) {
@@ -29,7 +33,7 @@ export default class PageLayout extends Component {
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <SideNav onClick={this.onClick} page={this.page} />
-        <Layout>
+        <Layout style={{ backgroundColor: '#DDEBF9' }}>
           <Content style={{ display: displays[0]}}>
             <Home />
           </Content>
@@ -50,8 +54,8 @@ export default class PageLayout extends Component {
           </Content>
           <Content style={{ display: displays[7]}}>
           </Content>
-          <Footer style={{ textAlign: 'center' }}>
-            Theguyhere ©2021
+          <Footer style={{ textAlign: 'center', backgroundColor: '#DDEBF9' }}>
+            Theguyhere, Miles ©2021
           </Footer>
         </Layout>
       </Layout>
