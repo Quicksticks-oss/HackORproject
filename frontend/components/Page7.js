@@ -101,7 +101,7 @@ export default class Page7 extends Component {
           What makes a blockchain so special? Wouldn't a normal database be just as capable at storing blocks and chaining them together? The key is in the architecture of blockchain networks. A client-server architecture has the server as the ultimate source of truth while the clients are simply seeking for information or requesting for data. In a blockchain network, all participants work together to determine what is the truth and what can happen on the network. Each computer on the network is called a <b>node</b>, and one of the primary jobs of a node is to validate new blocks being added to the network.
         </Paragraph>
         <Paragraph className="paragraph">
-          For most Proof of Work chains, these nodes are "miners" that solve hard math problems in order to earn the right to add a block to the blockchain. The next section will explain how consensus can actually be achieved among nodes, but for now, here's a demo simulating how mining could work. In this example, mining is done by changing the "nonce" value until the hash has 3 leading zeros. Only hashes with 3 leading zeros are considerd valid.
+          For most Proof of Work chains, these nodes are "miners" that solve hard math problems to earn the right to add a block to the blockchain. The next section will explain how consensus can be practically achieved among nodes, but for now, here's a demo simulating how mining could work. In this example, mining is done by changing the "nonce" value until the hash has 3 leading zeros. Only hashes with 3 leading zeros are considerd valid.
         </Paragraph>
         <Card title="Block 1" className="card">
           <Row>

@@ -20,7 +20,7 @@ export default class Page5 extends Component {
       <>
         <Title className="title">Blocks</Title>
         <Paragraph className="paragraph">
-          The basic building block of blockchains are, of course, blocks. Each block is a unit of data storage, storing some arbitrary data along with some metadata like the block's <b>timestamp</b>, its <b>hash</b>, the <b>previous block's hash</b>, and an arbitrary value called the <b>nonce</b>. The use of this metadata will become more apparent in later sections, but for now you can play with how the data in a block will interact with each other.
+          The basic building block of blockchains are, of course, blocks. Each block is a unit of data storage, holding some arbitrary data along with some metadata like the block's <b>timestamp</b>, its <b>hash</b>, the <b>previous block's hash</b>, and an arbitrary value called the <b>nonce</b>. The use of this metadata will become more apparent in later sections, but for now, you can play with how the data in a block will interact with each other.
         </Paragraph>
         <Card title="Block" className="card">
           <p>Hash:</p>

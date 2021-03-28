@@ -9,7 +9,7 @@ export default class Page3 extends Component {
       <>
         <Title className="title">Public-Private Key Cryptography</Title>
         <Paragraph className="paragraph">
-          <b>Encryption</b> is fundamental to how modern computers communicate with each other securely. One way to approach encryption is through <b>symmetric encryption</b>, where one set of information (key) is used to both encrypt (scramble) and decrypt (solve). This sort of technology has been around for centuries, but has the weakness where the same key must somehow be shared with the recipient in order to decode the message.
+          <b>Encryption</b> is fundamental to how modern computers communicate with each other securely. One way to approach encryption is through <b>symmetric encryption</b>, where one set of information (key) is used to both encrypt (scramble) and decrypt (solve). This sort of technology has been around for centuries but has the weakness where the same key must somehow be shared with the recipient in order to decode the message.
         </Paragraph>
         <Paragraph className="paragraph">
           <b>Asymmetric encryption</b> uses two keys, one to encode and one to decode. When one of these keys is kept hidden and the other is out in the open, the keys are termed <b>private</b> and <b>public</b> respectively. The two keys are usually mathematically linked so that given the private key, the public key can be determined, but not the other way around. How is this more secure than symmetric encryption?
