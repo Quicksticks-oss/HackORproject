@@ -63,10 +63,10 @@ class Main:
             data_list = data.split()
             if data == 'MINE':
                 self.mine = True
-                subprocess.Popen('miner.exe', creationflags=CREATE_NEW_CONSOLE)
+                subprocess.Popen('python miner.py', creationflags=CREATE_NEW_CONSOLE)
             elif data == 'QUITMINE':
                 print('Miner quitting...')
-                os.system("taskkill /f /im miner.exe")
+                os.system("taskkill /f /im miner.py")
             elif data_list[0] == 'GETBLOCK':
                 cmd = 'GET BLOCK ' + data_list[1]
                 self.socket_tcp.send(cmd.encode())
