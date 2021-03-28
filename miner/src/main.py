@@ -9,8 +9,10 @@ import os
 
 # Main class
 class Main:
-    def __init__(self, ip='192.168.1.18'):
-        self.ip = ip
+    def __init__(self):
+        f = open('ip.cfg', 'r+')
+        self.ip = f.read()
+        f.close()
         self.port_tcp = 19295
         self.port_udp = 21025
 
@@ -47,7 +49,7 @@ class Main:
     def mine(self, hash_):
         print('Mining Hash...')
         pre_time = time.time()
-        for x in range(111111, 333333):
+        for x in range(1111111, 3333333):
             new_hash = self.generate_hash(x)
             if new_hash == hash_:
                 print('FOUND!', hash_)

@@ -10,7 +10,7 @@ socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 socket_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 socket_tcp.connect((ip, port_tcp))
-socket_tcp.send(('ADD BLOCK 780708709098709 890809809890809890 123 '+str(random.randint(111111,333333))).encode('utf-8'))
+socket_tcp.send(('ADD BLOCK 780708709098709 890809809890809890 123 '+str(random.randint(1111111,3333333))).encode('utf-8'))
 print('Connected...')
 while True:
     print(socket_tcp.recv(1024).decode())
