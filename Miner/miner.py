@@ -10,9 +10,8 @@ import os
 # Main class
 class Main:
     def __init__(self):
-        f = open('ip.cfg', 'r+')
-        self.ip = f.read()
-        f.close()
+        hostname = socket.gethostname()
+        self.ip = socket.gethostbyname(hostname)
         self.port_tcp = 19295
         self.port_udp = 21025
 
