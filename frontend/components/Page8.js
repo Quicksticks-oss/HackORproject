@@ -1,130 +1,24 @@
 import React, { Component } from 'react';
-import { Typography, Input, Card, InputNumber } from 'antd';
-import sha256 from 'js-sha256';
+import { Typography } from 'antd';
 
 const { Paragraph, Title } = Typography;
-const { TextArea } = Input;
 
 export default class Page8 extends Component {
-  state = {
-    genesisHash: 'genesis',
-    nonce1: 1,
-    value1: '',
-    hash1: 'b80118ac281a68dded9e1061c116a2f47da14a536e4c6d2279fd9b31dc921e55',
-    nonce2: 1,
-    value2: '',
-    hash2: 'e037e1fa39fa29b00f96cb13634255ab767a6cbd2c9d91314cbb513b05860117',
-    nonce3: 1,
-    value3: '',
-    hash3: '7858876a654c46c4ecede25da54c9dea12ead1140a771db04597cb400224058e'
-  };
-
-  onChange1 = ({ target: { value } }) => this.setState({
-    value1: value,
-    hash1: sha256(this.state.value1 + this.state.nonce1 + this.genesisHash),
-    hash2: sha256(this.state.value2 + this.state.nonce2 + this.state.hash1),
-    hash3: sha256(this.state.value3 + this.state.nonce3 + this.state.hash2)
-  });
-  onChangeNonce1 = nonce => this.setState({
-    nonce1: nonce,
-    hash1: sha256(this.state.value1 + this.state.nonce1 + this.genesisHash),
-    hash2: sha256(this.state.value2 + this.state.nonce2 + this.state.hash1),
-    hash3: sha256(this.state.value3 + this.state.nonce3 + this.state.hash2)
-  });
-  onChange2 = ({ target: { value } }) => this.setState({
-    value2: value,
-    hash2: sha256(this.state.value2 + this.state.nonce2 + this.state.hash1),
-    hash3: sha256(this.state.value3 + this.state.nonce3 + this.state.hash2)
-  });
-  onChangeNonce2 = nonce => this.setState({
-    nonce2 : nonce,
-    hash2: sha256(this.state.value2 + this.state.nonce2 + this.state.hash1),
-    hash3: sha256(this.state.value3 + this.state.nonce3 + this.state.hash2)
-  });
-  onChange3 = ({ target: { value } }) => this.setState({
-    value3: value,
-    hash3: sha256(this.state.value3 + this.state.nonce3 + this.state.hash2)
-  });
-  onChangeNonce3 = nonce => this.setState({
-    nonce3: nonce,
-    hash3: sha256(this.state.value3 + this.state.nonce3 + this.state.hash2)
-  });
-
   render() {
-    const {
-      nonce1,
-      value1,
-      hash1,
-      nonce2,
-      value2,
-      hash2,
-      nonce3,
-      value3,
-      hash3
-    } = this.state;
     return (
       <>
         <Title className="title">Consensus</Title>
+        <Title level={3} className="title-left">Proof of Work</Title>
         <Paragraph className="paragraph">
-          
+          How does everyone decide on what the true state of the network is? In a blockchain, nodes agree that the longest chain of legal blocks is the one that is legitimate. If a bad actor wanted to rewrite history, they would need to mine that block and all subsequent blocks faster than anyone else on the network would in order for people to consider it valid. With <b>Proof of Work (PoW)</b>, the mining process takes a considerable amount of resources to happen, so such an attack would be prohibitavely expensive. Unless you had over half the mining power in the entire network, the rest of the network will bound to create blocks faster than you can, making your version of history useless. Anyone can propose an alternate history, but if no one accepts it, it's pretty much worthless.
         </Paragraph>
-        <Card title="Block 1" className="card">
-          <p>Hash:</p>
-          <p>{hash1}</p>
-          <p>Nonce:</p>
-          <InputNumber
-            min={1}
-            defaultValue={1}
-            value={nonce1}
-            onStep={this.onChangeNonce1}
-            className="field"
-          />
-          <p>Data:</p>
-          <TextArea
-            value={value1}
-            autoSize={{ minRows: 3, maxRows: 5 }}
-            onChange={this.onChange1}
-            className="field"
-          />
-        </Card>
-        <Card title="Block 2" className="card">
-          <p>Hash:</p>
-          <p>{hash2}</p>
-          <p>Nonce:</p>
-          <InputNumber
-            min={1}
-            defaultValue={1}
-            value={nonce2}
-            onStep={this.onChangeNonce2}
-            className="field"
-          />
-          <p>Data:</p>
-          <TextArea
-            value={value2}
-            autoSize={{ minRows: 3, maxRows: 5 }}
-            onChange={this.onChange2}
-            className="field"
-          />
-        </Card>
-        <Card title="Block 3" className="card">
-          <p>Hash:</p>
-          <p>{hash3}</p>
-          <p>Nonce:</p>
-          <InputNumber
-            min={1}
-            defaultValue={1}
-            value={nonce3}
-            onStep={this.onChangeNonce3}
-            className="field"
-          />
-          <p>Data:</p>
-          <TextArea
-            value={value3}
-            autoSize={{ minRows: 3, maxRows: 5 }}
-            onChange={this.onChange3}
-            className="field"
-          />
-        </Card>
+        <Paragraph className="paragraph">
+          Of course, because mining is both crucial to network security and pretty expensive, miners need to have economic motivation to pursue mining. In some networks, mining actually mints new tokens in the network. On other networks, miners take a fee from those who use the network. Most networks use a combination of the two to balance token supply with transaction costs. PoW has proven to be an incredibly secure consensus mechanism. As of this writing, <b>there have been no successful attack against the PoW mechanisms of any major blockchain network</b>. Yes, there have been successful scams and attacks from other methods, but no one has been able to cheat the fundamental security mechanism that gives blockchains and their tokens their value.
+        </Paragraph>
+        <Title level={3} className="title-left">Proof of Stake</Title>
+        <Paragraph className="paragraph">
+          Despite the security that PoW offers, it has a few significant drawbacks. The first issue is that the mining process limits transaction throughput as miner on the network needs to process each transaction, so more miners doesn't speed up the network. In addition, the enormous amount of computing consumes a non-insignificant portion of the world's energy. Enter Proof of Stake, a consensus mechanism that relies on people locking their tokens away in order to bestow them with validating priviledges. Rather than having everyone compete in a computing arms race, those who hold more tokens have a higher chance of contributing to the network. The idea is that those who hold large shares of the network will want to be honest to keep the network value high. In the event that the validators are found to be dishonest, their staked tokens can be slashed as punishment.
+        </Paragraph>
       </>
     )
   }

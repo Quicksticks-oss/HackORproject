@@ -5,7 +5,8 @@ import {
   CodeOutlined,
   DesktopOutlined,
   BlockOutlined,
-  QuestionOutlined
+  QuestionOutlined,
+  PlayCircleOutlined
 } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
@@ -86,6 +87,14 @@ export default class SideNav extends Component {
             className="menuitem"
           >
             Why Blockchain
+          </Menu.Item>
+          <Menu.Item
+            key="10"
+            icon={<PlayCircleOutlined />}
+            onClick={this.props.onClick}
+            className="menuitem"
+          >
+            Blockchain Simulation
           </Menu.Item>
         </Menu>
       </Sider>

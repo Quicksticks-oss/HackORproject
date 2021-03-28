@@ -10,6 +10,8 @@ import Page5 from './Page5';
 import Page6 from './Page6';
 import Page7 from './Page7';
 import Page8 from './Page8';
+import Page9 from './Page9';
+import Page10 from './Page10';
 
 const { Content, Footer } = Layout;
 
@@ -27,7 +29,7 @@ export default class PageLayout extends Component {
   };
   getDisplays = () => {
     let a = [];
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i <= 10; i++) {
       a.push(parseInt(this.state.page) === i ? null : 'none');
     };
     return a;
@@ -67,6 +69,10 @@ export default class PageLayout extends Component {
             <Page8 />
           </Content>
           <Content style={{ display: displays[9]}}>
+            <Page9 />
+          </Content>
+          <Content style={{ display: displays[10]}}>
+            <Page10 />
           </Content>
           <Footer style={{ textAlign: 'center', backgroundColor: '#DDEBF9' }}>
             Theguyhere, Miles ©2021
