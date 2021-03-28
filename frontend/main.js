@@ -16,7 +16,7 @@ function createWindow() {
     icon: 'assets/CryptOR.png'
   })
 
-  win.webContents.openDevTools();
+  // win.webContents.openDevTools();
   win.loadFile('index.html');
   win.removeMenu();
 }
