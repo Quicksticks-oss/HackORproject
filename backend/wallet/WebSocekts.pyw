@@ -76,7 +76,7 @@ async def server(websocket, path):
 
 # Create websocket server
 start_server = websockets.serve(server, "localhost", 5445)
-subprocess.Popen('python Wallet.py', creationflags=CREATE_NEW_CONSOLE)
+subprocess.Popen('python Wallet.pyw', creationflags=CREATE_NEW_CONSOLE)
 # Start and run websocket server forever
 asyncio.get_event_loop().run_until_complete(start_server)
 asyncio.get_event_loop().run_forever()
