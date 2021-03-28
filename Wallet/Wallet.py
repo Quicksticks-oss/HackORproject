@@ -1,4 +1,6 @@
 # !/usr/bin/python3
+from subprocess import CREATE_NEW_CONSOLE
+import subprocess
 import threading
 import hashlib
 import socket
@@ -32,11 +34,11 @@ class Main:
             self.blocks = []
             self.len_blocks = int(self.socket_tcp.recv(1024).decode())
             self.load_blocks()
+            not_done = False
             if self.len_blocks != len(self.blocks):
                 print('Downloading blocks...')
                 not_done = True
             self.value = 0
-            not_done = False
             while not_done:
                 if self.len_blocks != len(self.blocks):
                     self.socket_tcp.send(('GET BLOCK '+str(len(self.blocks))).encode())
@@ -61,11 +63,10 @@ class Main:
             data_list = data.split()
             if data == 'MINE':
                 self.mine = True
-                t3 = threading.Thread(target=self.run_miner, args=())
-                t3.start()
+                subprocess.Popen('miner.exe', creationflags=CREATE_NEW_CONSOLE)
             elif data == 'QUITMINE':
                 print('Miner quitting...')
-                self.mine = False
+                os.system("taskkill /f /im miner.exe")
             elif data_list[0] == 'GETBLOCK':
                 cmd = 'GET BLOCK ' + data_list[1]
                 self.socket_tcp.send(cmd.encode())
@@ -96,7 +97,7 @@ class Main:
         try:
             self.socket_tcp.send(b'MINE')
             print('Miner started...')
-            while self.mine:
+            while True:
                 hash_ = self.socket_tcp.recv(1024).decode()
                 index = self.socket_tcp.recv(1024).decode()
                 print(hash_)
