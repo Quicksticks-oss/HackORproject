@@ -9,7 +9,9 @@ export default class Home extends Component {
       <>
         <Title className="title">CryptOR</Title>
         <Paragraph className="paragraph">
-          Project CryptOR is an application that helps people learn about how blockchain technology works with interactive guides, demos, and simulations. This project was build during the HackOR 2021 Hackathon.
+          Project CryptOR is an application that helps people learn about how
+          blockchain technology works with interactive guides and demos. This
+          project was build during the HackOR 2021 Hackathon.
         </Paragraph>
         <Paragraph className="paragraph">
           🎨 Frontend Developer: Theguyhere

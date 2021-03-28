@@ -66,7 +66,7 @@ export default class Page8 extends Component {
       <>
         <Title className="title">Consensus</Title>
         <Paragraph className="paragraph">
-          The real power of blockchains come from how the blocks are linked together. Because each block depends on the hash of the previous block, <b>any changes to any fields from any of the previous blocks in a blockchain will result in a cascading change in all subsequent hashes</b>. If you're trying to modify data without other people knowing, it'll be pretty hard to do. Go ahead, try it out for yourself!
+          
         </Paragraph>
         <Card title="Block 1" className="card">
           <p>Hash:</p>
