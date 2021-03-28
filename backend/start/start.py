@@ -1,4 +1,6 @@
 import os
+import subprocess
+from subprocess import CREATE_NEW_CONSOLE
 
 def Start():
     dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -6,6 +8,8 @@ def Start():
     path2 = os.path.join(dir_path, "src/main.py")
     cmd = path1 + ' ' + path2
     os.system(cmd)
+    subprocess.Popen('python wallet/WebSock.py', creationflags=CREATE_NEW_CONSOLE)
+
 
 if __name__ == '__main__':
     Start()
