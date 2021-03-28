@@ -8,7 +8,7 @@ def Start():
     path2 = os.path.join(dir_path, "src/main.py")
     cmd = path1 + ' ' + path2
     os.system(cmd)
-    subprocess.Popen('wallet/WebSock.exe', creationflags=CREATE_NEW_CONSOLE)
+    subprocess.Popen('python wallet/WebSock.py', creationflags=CREATE_NEW_CONSOLE)
 
 
 if __name__ == '__main__':
