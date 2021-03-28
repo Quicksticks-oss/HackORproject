@@ -172,7 +172,7 @@ class Main:
                         self.blocks.append(self.blocks_ver[index])
                         self.blocks_ver.remove(self.blocks_ver[index])
                         f = open('data/blocks/'+str(len(self.blocks)-1)+'.json', 'w+')
-                        f.write(self.blocks[index])
+                        f.write(str(self.blocks[index]))
                         f.close()
                         print('* -----------')
                         print('* BLOCK ADDED')
