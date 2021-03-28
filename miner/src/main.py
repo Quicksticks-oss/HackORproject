@@ -2,13 +2,14 @@
 import threading
 import hashlib
 import socket
+import random
 import json
 import time
 import os
 
 # Main class
 class Main:
-    def __init__(self, ip='127.0.0.1'):
+    def __init__(self, ip='192.168.1.18'):
         self.ip = ip
         self.port_tcp = 19295
         self.port_udp = 21025
@@ -30,10 +31,30 @@ class Main:
 
     def run(self):
         while True:
-            block = self.socket_tcp.recv(1024).decode()
+            hash_ = self.socket_tcp.recv(1024).decode()
             index = self.socket_tcp.recv(1024).decode()
-            print(block)
-            self.socket_tcp.send(('GREENLIGHT '+index).encode())
+            print(hash_)
+            print(str(index))
+            responce = self.mine(hash_)
+            if responce == True:
+                self.socket_tcp.send(('GREENLIGHT '+str(index)).encode())
+            else:
+                self.socket_tcp.send(('REDLIGHT '+index).encode())
+
+    def generate_hash(self,data):
+        return hashlib.sha256(str(data).encode('utf-8')).hexdigest()
+
+    def mine(self, hash_):
+        print('Mining Hash...')
+        pre_time = time.time()
+        for x in range(111111, 333333):
+            new_hash = self.generate_hash(x)
+            if new_hash == hash_:
+                print('FOUND!', hash_)
+                print('Took', (pre_time-time.time()) * -1, 'seconds!')
+                return True
+
+        return False
 
 # Start
 if __name__ == '__main__':
