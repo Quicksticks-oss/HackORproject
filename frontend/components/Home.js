@@ -7,7 +7,7 @@ export default class Home extends Component {
   render() {
     return (
       <>
-        <Title className="title" style={{ textAlign: 'center' }}>CryptOR</Title>
+        <Title className="title">CryptOR</Title>
         <Paragraph className="paragraph">
           Project CryptOR is an application that helps people learn about how
           blockchain technology works with interactive guides and demos. This

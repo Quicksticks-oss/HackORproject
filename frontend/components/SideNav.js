@@ -7,7 +7,6 @@ import {
   EyeOutlined,
   QuestionOutlined
 } from '@ant-design/icons';
-import '../src/index.scss';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
@@ -41,6 +40,7 @@ export default class SideNav extends Component {
             key="1"
             icon={<CodeOutlined />}
             onClick={this.props.onClick}
+            className="menuitem"
           >
             What is Blockchain
           </Menu.Item>
@@ -48,31 +48,43 @@ export default class SideNav extends Component {
             key="sub1"
             icon={<DesktopOutlined />}
             title="Blockchain Technologies"
+            className="menuitem"
           >
-            <Menu.Item key="2" onClick={this.props.onClick}>
+            <Menu.Item key="2" onClick={this.props.onClick} className="subitem">
               Hash Functions
             </Menu.Item>
-            <Menu.Item key="3" onClick={this.props.onClick}>
+            <Menu.Item key="3" onClick={this.props.onClick} className="subitem">
               Public-Private Keys
             </Menu.Item>
-            <Menu.Item key="4" onClick={this.props.onClick}>
+            <Menu.Item key="4" onClick={this.props.onClick} className="subitem">
               The Internet
             </Menu.Item>
           </SubMenu>
-          <SubMenu key="sub2" icon={<EyeOutlined />} title="Blockchain Anatomy">
-            <Menu.Item key="5" onClick={this.props.onClick}>Blocks</Menu.Item>
-            <Menu.Item key="6" onClick={this.props.onClick}>
+          <SubMenu
+            key="sub2"
+            icon={<EyeOutlined />}
+            title="Blockchain Anatomy"
+            className="menuitem"
+          >
+            <Menu.Item key="5" onClick={this.props.onClick} className="subitem">
+              Blocks
+            </Menu.Item>
+            <Menu.Item key="6" onClick={this.props.onClick} className="subitem">
               Blockchains
             </Menu.Item>
-            <Menu.Item key="7" onClick={this.props.onClick}>Nodes</Menu.Item>
-            <Menu.Item key="8" onClick={this.props.onClick}>
+            <Menu.Item key="7" onClick={this.props.onClick} className="subitem">
+              Nodes
+            </Menu.Item>
+            <Menu.Item key="8" onClick={this.props.onClick} className="subitem">
               Consensus
             </Menu.Item>
           </SubMenu>
           <Menu.Item
             key="9"
             icon={<QuestionOutlined />}
-            onClick={this.props.onClick}>
+            onClick={this.props.onClick}
+            className="menuitem"
+          >
             Why Blockchain
           </Menu.Item>
         </Menu>
