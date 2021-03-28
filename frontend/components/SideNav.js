@@ -31,8 +31,8 @@ export default class SideNav extends Component {
         <a onClick={this.props.onClick}>
           <img
             src="./assets/CryptOR.png"
-            width="75"
-            height="75"
+            width="70"
+            height="70"
             className="logo"
           />
         </a>

@@ -1,24 +1,166 @@
 import React, { Component } from 'react';
-import { Typography } from 'antd';
+import {
+  Typography,
+  Row,
+  Col,
+  Card,
+  Button,
+  InputNumber,
+  Form,
+  Input
+} from 'antd';
+import {
+  PoweroffOutlined,
+  ThunderboltOutlined,
+  BankOutlined,
+  CalculatorOutlined
+} from '@ant-design/icons';
 
 const { Paragraph, Title } = Typography;
 
 export default class Page10 extends Component {
+  state = {
+    on: false,
+    powerLoading: false,
+    minderLoading: false,
+    transactLoading: false,
+    blockIndex: 1,
+    dataLoading: false
+  };
+  onPowerClick = () => {
+    this.setState({ powerLoading: true });
+    if (this.state.on) {
+      this.setState({ on: false })
+    } else {
+      const python = require('child_process')
+        .spawn('python', ['../../backend/src/main.py']);
+      python.stdout.on('data', function (data) {
+        console.log("Python response: ", data.toString('utf8'));
+        result.textContent = data.toString('utf8');
+      });
+
+      python.stderr.on('data', (data) => {
+        console.error(`stderr: ${data}`);
+      });
+
+      python.on('close', (code) => {
+        console.log(`child process exited with code ${code}`);
+      });
+      this.setState({ on: true })
+    }
+  }
+  onBlockIndexChange = blockIndex => this.setState({ blockIndex });
+
   render() {
+    const {
+      on,
+      powerLoading,
+      minderLoading,
+      transactLoading,
+      blockIndex,
+      dataLoading
+    } = this.state;
     return (
       <>
         <Title className="title">Blockchain Simulation</Title>
-        <Title level={3} className="title-left">Proof of Work</Title>
         <Paragraph className="paragraph">
-          How does everyone decide on what the true state of the network is? In a blockchain, nodes agree that the longest chain of legal blocks is the one that is legitimate. If a bad actor wanted to rewrite history, they would need to mine that block and all subsequent blocks faster than anyone else on the network would in order for people to consider it valid. With <b>Proof of Work (PoW)</b>, the mining process takes a considerable amount of resources to happen, so such an attack would be prohibitavely expensive. Unless you had over half the mining power in the entire network, the rest of the network will bound to create blocks faster than you can, making your version of history useless. Anyone can propose an alternate history, but if no one accepts it, it's pretty much worthless.
+          Here is a little simulation of how a blockchain could operate. Real blockchain networks are much more complex and run on many different computers, but this should demonstrate the rough functions!
         </Paragraph>
-        <Paragraph className="paragraph">
-          Of course, because mining is both crucial to network security and pretty expensive, miners need to have economic motivation to pursue mining. In some networks, mining actually mints new tokens in the network. On other networks, miners take a fee from those who use the network. Most networks use a combination of the two to balance token supply with transaction costs. PoW has proven to be an incredibly secure consensus mechanism. As of this writing, <b>there have been no successful attack against the PoW mechanisms of any major blockchain network</b>. Yes, there have been successful scams and attacks from other methods, but no one has been able to cheat the fundamental security mechanism that gives blockchains and their tokens their value.
-        </Paragraph>
-        <Title level={3} className="title-left">Proof of Stake</Title>
-        <Paragraph className="paragraph">
-          Despite the security that PoW offers, it has a few significant drawbacks. The first issue is that the mining process limits transaction throughput as miner on the network needs to process each transaction, so more miners doesn't speed up the network. In addition, the enormous amount of computing consumes a non-insignificant portion of the world's energy. Enter Proof of Stake, a consensus mechanism that relies on people locking their tokens away in order to bestow them with validating priviledges. Rather than having everyone compete in a computing arms race, those who hold more tokens have a higher chance of contributing to the network. The idea is that those who hold large shares of the network will want to be honest to keep the network value high. In the event that the validators are found to be dishonest, their staked tokens can be slashed as punishment.
-        </Paragraph>
+        <Row>
+          <Col span={1}/>
+          <Col span={9}>
+            <Card title="Simulation Controls" className="card-small">
+              <Button
+                type="primary"
+                icon={<PoweroffOutlined />}
+                loading={powerLoading}
+                danger={on}
+                onClick={this.onPowerClick}
+                className="btn"
+              >
+              Power simulation
+              </Button>
+              <br />
+              <Button
+                icon={<ThunderboltOutlined />}
+                loading={minderLoading}
+                disabled={!on}
+                className="btn"
+              >
+              Start a miner node
+              </Button>
+            </Card>
+            <Card title="Send Transaction" className="card-small">
+              <Form>
+                <Form.Item
+                  name="sender"
+                  label="Sender"
+                  rules={[{ required: true }]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="receiver"
+                  label="Receiver"
+                  rules={[{ required: true }]}
+                >
+                  <Input />
+                </Form.Item>
+                <Form.Item
+                  name="amount"
+                  label="Amount"
+                  rules={[{ required: true }]}
+                  initialValue={0}
+                >
+                  <InputNumber min={0}/>
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    icon={<BankOutlined />}
+                    loading={transactLoading}
+                    disabled={!on}
+                    className="btn"
+                  >
+                  Send
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+            <Card title="Get Block Data by Index" className="card-small">
+              <Form>
+                <Form.Item
+                  name="index"
+                  label="Index"
+                  rules={[{ required: true }]}
+                  initialValue={1}
+                >
+                  <InputNumber
+                    min={1}
+                    value={blockIndex}
+                    onChange={this.onBlockIndexChange}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button
+                    icon={<CalculatorOutlined />}
+                    loading={dataLoading}
+                    disabled={!on}
+                  >
+                  Get block data
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Card>
+          </Col>
+          <Col span={13}>
+            <Card
+              title="Information"
+              className="card-small"
+            >
+            </Card>
+          </Col>
+          <Col span={1}/>
+        </Row>
       </>
     )
   }

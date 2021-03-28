@@ -19,7 +19,7 @@ export default class Page2 extends Component {
         <Title className="title">Hash Functions</Title>
         <Paragraph className="paragraph">
           Hash functions, and more generally one-way functions, are absolutely
-          critical pieces of cryptography to all modern computatation. <b>
+          critical pieces of cryptography to all modern computation. <b>
           One-way functions</b> are functions that are easy to compute one way
           but much harder to reverse. A common example is multiplying prime
           numbers: it's quite trivial to find the product of 17 and 19 (323)
@@ -38,8 +38,8 @@ export default class Page2 extends Component {
         <Paragraph className="paragraph">
           One other important feature about hash functions is that a small
           difference in the inputs should result in drastic differences in the
-          output. If a small change didn't result in an obviously different
-          hash, little errors or sabatoges could get by and compromise
+          output. If a small change didn't result in a significantly different
+          hash, little errors or sabotages could get by and compromise
           security and people could infer content based on known hashes.
         </Paragraph>
         <Paragraph className="paragraph">

@@ -1,4 +1,3 @@
-
 const { BrowserWindow, app, ipcMain, Notification } = require('electron');
 const path = require('path');
 
@@ -13,7 +12,8 @@ function createWindow() {
       worldSafeExecuteJavaScript: true,
       contextIsolation: true,
       preload: path.join(__dirname, 'preload.js')
-    }
+    },
+    icon: 'assets/CryptOR.png'
   })
 
   win.webContents.openDevTools();

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Typography, Input, Card, InputNumber, Button, Row, Col } from 'antd';
+import { Typography, Input, Card, Button, Row, Col } from 'antd';
 import sha256 from 'js-sha256';
 import { ThunderboltOutlined } from '@ant-design/icons';
 
