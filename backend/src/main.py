@@ -2,6 +2,7 @@
 import threading
 import hashlib
 import socket
+import random
 import json
 import time
 import sys
@@ -187,7 +188,7 @@ class Main:
 
     def update(self):
         while True:
-            time.sleep(60)
+            time.sleep(15)
             print('* --- UPDATE --- *')
             print('* TIME:', time.ctime())
             print('* BLOCKS:', len(self.blocks))
@@ -195,12 +196,15 @@ class Main:
             print('* -------------- *')
 
     def miners_send(self, block, index):
-        for x in range(len(self.miners)):
+        if len(self.miners) != 0:
+            x = random.randint(0, len(self.miners)-1)
             self.miners[x].send(block.encode('utf-8'))
             self.miners[x].send(str(index).encode('utf-8'))
-        print('* -------------- *')
-        print('* Block sent...')
-        print('* -------------- *')
+            print('* -------------- *')
+            print('* Block sent...')
+            print('* -------------- *')
+        else:
+            print('* -- NO MINERS -- *')
 
     def run(self):
         t = threading.Thread(target=self.update, args=())

@@ -5,46 +5,77 @@ import socket
 import random
 import json
 import time
+import sys
 import os
 
 # Main class
 class Main:
-    def __init__(self, ip='192.168.1.18'):
-        while True:
-            self.passphrase = input('Passphrase: ')
-            res = self.login(self.passphrase)
-            if res == True:
-                self.keypriv = self.generate_hash(self.passphrase)
-                self.keypub = self.generate_hash(self.keypriv)
-                self.ip = ip
-                self.port_tcp = 19295
-                self.port_udp = 21025
-                self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                self.socket_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-                self.socket_tcp.connect((self.ip, self.port_tcp))
-                self.blocks = []
-                self.len_blocks = int(self.socket_tcp.recv(1024).decode())
-                self.load_blocks()
+    def __init__(self, ip='192.168.1.18', passw=''):
+        self.passphrase = passw
+        res = self.login(self.passphrase)
+        print('Starting...')
+        print(res)
+        if res == False:
+            print('Starting...')
+            t = threading.Thread(target=self.server_web, args=())
+            t.start()
+            
+            self.keypriv = self.generate_hash(self.passphrase)
+            self.keypub = self.generate_hash(self.keypriv)
+            self.ip = ip
+            self.mine = False
+            self.port_tcp = 19295
+            self.port_udp = 21025
+            self.socket_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket_udp = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+            self.socket_tcp.connect((self.ip, self.port_tcp))
+            self.blocks = []
+            self.len_blocks = int(self.socket_tcp.recv(1024).decode())
+            self.load_blocks()
+            if self.len_blocks != len(self.blocks):
+                print('Downloading blocks...')
+                not_done = True
+            self.value = 0
+            not_done = False
+            while not_done:
                 if self.len_blocks != len(self.blocks):
-                    print('Downloading blocks...')
-
-                self.value = 0
-
-                while self.len_blocks != len(self.blocks):
                     self.socket_tcp.send(('GET BLOCK '+str(len(self.blocks))).encode())
                     block = self.socket_tcp.recv(1024).decode()
                     self.blocks.append(block)
                     f = open('data/blocks/'+str(len(self.blocks)), 'w+')
                     f.write(block)
                     f.close()
+                else:
+                    not_done = False
 
-                print('Blocks:', self.len_blocks)
-                print('Balance:', self.value)
+            print('Blocks:', self.len_blocks)
 
-                while True:
-                    pass
-            else:
-                print('Wrong login...')
+    def server_web(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        s.bind(('127.0.0.1', 9294))
+        print('Server started...')
+        while True:
+            data, addr = s.recvfrom(1024)
+            data = data.decode()
+            print(data)
+            data_list = data.split()
+            if data == 'MINE':
+                self.mine = True
+                t3 = threading.Thread(target=self.run_miner, args=())
+                t3.start()
+            elif data == 'QUITMINE':
+                print('Miner quitting...')
+                self.mine = False
+            elif data_list[0] == 'GETBLOCK':
+                cmd = 'GET BLOCK ' + data_list[1]
+                self.socket_tcp.send(cmd.encode())
+                block = self.socket_tcp.recv(1024)
+                s.sendto(block, addr)
+            elif data_list[0] == 'SHA':
+                data = self.generate_hash(data_list[1])
+                s.sendto(self.generate_hash(data_list[1]).encode(), addr)
+            elif data_list[0] == 'ADDTRANSACTION':
+                self.socket_tcp.send(('ADD BLOCK '+data_list[1]+' '+data_list[2]+' '+data_list[3]+' '+str(random.randint(1111111,3333333))).encode('utf-8'))
 
     def login(self, passw):
         try:
@@ -63,7 +94,9 @@ class Main:
 
     def run_miner(self):
         try:
-            while True:
+            self.socket_tcp.send(b'MINE')
+            print('Miner started...')
+            while self.mine:
                 hash_ = self.socket_tcp.recv(1024).decode()
                 index = self.socket_tcp.recv(1024).decode()
                 print(hash_)
@@ -73,6 +106,7 @@ class Main:
                     self.socket_tcp.send(('GREENLIGHT '+index).encode())
                 else:
                     self.socket_tcp.send(('REDLIGHT '+index).encode())
+            print('Miner Quit.')
         except:
             pass
 
@@ -117,4 +151,5 @@ class Main:
 
 # Start
 if __name__ == '__main__':
-    main = Main()
+    passwd = sys.argv[0]
+    main = Main(passw=passwd)
